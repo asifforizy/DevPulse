@@ -7,14 +7,16 @@ import jwt from "jsonwebtoken";
 
 
 const registerUserInDB = async (payload: IUser) => {
-    const { name, email, password, role } = payload;
-      const hashPassword = await bcrypt.hash(password, 10);
+  const { name, email, password, role } = payload;
+  const hashPassword = await bcrypt.hash(password, 10);
 
-    const result = await pool.query(
-        "INSERT INTO users (name, email, password_hash, role) VALUES ($1, $2, $3, COALESCE($4, 'contributor')) RETURNING *",
-        [name, email, hashPassword, role]
-    );
-    return result.rows[0];
+  const result = await pool.query(
+    "INSERT INTO users (name, email, password_hash, role) VALUES ($1, $2, $3, COALESCE($4, 'contributor')) RETURNING *",
+    [name, email, hashPassword, role]
+  );
+  const user = result.rows[0];
+  delete user.password_hash;
+  return result.rows[0];
 }
 
 
@@ -52,7 +54,7 @@ const loginUser = async (payload: { email: string; password: string }) => {
     role: user.role
   };
 
-  const accessToken = jwt.sign(
+  const token = jwt.sign(
     jwtpayload,
     config.secret as string,
     {
@@ -60,11 +62,11 @@ const loginUser = async (payload: { email: string; password: string }) => {
     }
   );
 
-  return { accessToken };
+  return  {token, user: jwtpayload}; ;
 };
 
 
 export const authService = {
-    registerUserInDB,
-    loginUser
+  registerUserInDB,
+  loginUser
 }
