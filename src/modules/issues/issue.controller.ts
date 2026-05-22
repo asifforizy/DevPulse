@@ -3,15 +3,15 @@ import { issueService } from "./issue.service";
 
 const createIssue = async (req: Request, res: Response) => {
     try {
-    
+
         const result = await issueService.createIssue(req.body);
         res.status(201).json({
             success: true,
             message: "Issue created successfully",
             data: result
         });
-    } catch (error : any) {
-        res.status(500).json({ 
+    } catch (error: any) {
+        res.status(500).json({
             success: false,
             message: "Failed to create issue",
             error: error.message
@@ -19,6 +19,26 @@ const createIssue = async (req: Request, res: Response) => {
     }
 };
 
+
+
+const getAllIssues = async (req: Request, res: Response) => {
+    try {
+        const result = await issueService.getAllIssues(req.query);
+        res.status(200).json({
+            success: true,
+            message: "Issues retrieved successfully",
+            data: result
+        });
+    } catch (error: any) {
+        res.status(500).json({
+            success: false,
+            message: "Failed to retrieve issues",
+            error: error.message
+        });
+    }
+}
+
 export const issueController = {
-    createIssue
+    createIssue,
+    getAllIssues
 };
