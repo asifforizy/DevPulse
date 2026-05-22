@@ -100,22 +100,25 @@ const getSingleIssue = async (id: string) => {
     );
 
 
-    if (result.rows.length === 0) {
-        throw new Error("Issue not found");
-    }
-
-
     const issue = result.rows[0];
 
     const reporterResult = await pool.query(
         `SELECT id, name, role FROM users WHERE id = $1`,
         [issue.reporter_id]
     );
-    const reporter = reporterResult.rows[0] || null;
+    const reporter = reporterResult.rows[0];
 
     return {
-        ...issue,
-        reporter
+        data: {
+            id: issue.id,
+            title: issue.title,
+            description: issue.description,
+            type: issue.type,
+            status: issue.status,
+            reporter,
+            created_at: issue.created_at,
+            updated_at: issue.updated_at,
+        },
     };
 
 };

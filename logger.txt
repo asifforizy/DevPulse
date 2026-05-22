@@ -84,3 +84,12 @@ time: 1779461064449, url: /api/auth/login, method: POST
 time: 1779461082434, url: /api/auth/login, method: POST
 time: 1779461104400, url: /api/auth/login, method: POST
 time: 1779461117101, url: /api/auth/login, method: POST
+time: 1779461318747, url: /api/issues, method: POST
+time: 1779461436924, url: /api/issues?sort=newest, method: GET
+time: 1779461492502, url: /api/issues/7, method: GET
+time: 1779461550847, url: /api/issues/12, method: GET
+time: 1779461676874, url: /api/issues/12, method: GET
+time: 1779461703646, url: /api/issues/12, method: GET
+time: 1779461917895, url: /api/issues/12878, method: GET
+time: 1779462171150, url: /api/issues/12, method: GET
+time: 1779462260625, url: /api/issues/12, method: GET
