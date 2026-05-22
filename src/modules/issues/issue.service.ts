@@ -4,6 +4,16 @@ import type { IIssue } from "./issue.interface";
 const createIssue = async (payload: IIssue) => {
     const { title, description, type, reporter_id } = payload;
 
+
+    const userCheck = await pool.query(
+        `SELECT id FROM users WHERE id = $1`,
+        [reporter_id]
+    );
+
+    if (userCheck.rows.length === 0) {
+        throw new Error("Reporter not found");
+    }
+
     const result = await pool.query(
         `
     INSERT INTO issues
@@ -52,7 +62,6 @@ const getAllIssues = async (query: any) => {
 
     if (issues.length === 0) return [];
 
-    // collect reporter ids
     const reporterIds = [...new Set(issues.map(i => i.reporter_id))];
 
     const reporterResult = await pool.query(
@@ -64,13 +73,11 @@ const getAllIssues = async (query: any) => {
 
     const reporters = reporterResult.rows;
 
-    // map reporters
     const reporterMap = new Map();
     reporters.forEach(r => {
         reporterMap.set(r.id, r);
     });
 
-    // attach reporter
     const formatted = issues.map(issue => ({
         id: issue.id,
         title: issue.title,
@@ -85,7 +92,38 @@ const getAllIssues = async (query: any) => {
     return formatted;
 };
 
+
+const getSingleIssue = async (id: string) => {
+    const result = await pool.query(
+        `SELECT * FROM issues WHERE id = $1`,
+        [id]
+    );
+
+
+    if (result.rows.length === 0) {
+        throw new Error("Issue not found");
+    }
+
+
+    const issue = result.rows[0];
+
+    const reporterResult = await pool.query(
+        `SELECT id, name, role FROM users WHERE id = $1`,
+        [issue.reporter_id]
+    );
+    const reporter = reporterResult.rows[0] || null;
+
+    return {
+        ...issue,
+        reporter
+    };
+
+};
+
+
 export const issueService = {
     createIssue,
-    getAllIssues
+    getAllIssues,
+    getSingleIssue
 };
+
