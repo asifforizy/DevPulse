@@ -45,6 +45,9 @@ const auth = (...roles: string[]) => {
       req.user = user;
 
       next();
+
+
+      
     } catch (error) {
       return res.status(401).json({
         success: false,

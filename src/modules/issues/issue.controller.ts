@@ -24,7 +24,6 @@ const createIssue = async (req: Request, res: Response) => {
 };
 
 
-
 const getAllIssues = async (req: Request, res: Response) => {
     try {
         const result = await issueService.getAllIssues(req.query);
@@ -66,8 +65,74 @@ const getSingleIssue = async (req: Request, res: Response) => {
 
 }
 
+
+const updateIssue = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    try {
+        const result = await issueService.updateIssue(
+            req.body,
+            id as string,
+            req.user!
+        );
+
+        if (!result) {
+            return res.status(404).json({
+                success: false,
+                message: "Issue Not found!",
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Issue updated successfully!",
+            data: result,
+        });
+
+    } catch (error: any) {
+        return res.status(500).json({
+            success: false,
+            message: error.message,
+            error: error.message,
+        });
+    }
+};
+
+
+const deleteIssue = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+        const result = await issueService.deleteIssue(id as string);
+
+
+        if (result.rowCount === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "Issue Not found!",
+            });
+        }
+
+
+        res.status(200).json({
+            success: true,
+            message: "Issue deleted successfully",
+            data: result
+        });
+    } catch (error: any) {
+        res.status(500).json({
+            success: false,
+            message: error.message,
+            error: error,
+        });
+    }
+
+}
+
+
 export const issueController = {
     createIssue,
     getAllIssues,
-    getSingleIssue
+    getSingleIssue,
+    updateIssue,
+    deleteIssue
 };
