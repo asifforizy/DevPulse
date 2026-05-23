@@ -26,5 +26,12 @@ DevPulse is a backend REST API for managing software issues and feature requests
 - Modular and scalable architecture
 
 
+## End Points
+- /api/auth/signup
+- /api/auth/login
+- /api/issues
+- /api/issues?sort=newest
+- /api/issues/:id
+
 
 
