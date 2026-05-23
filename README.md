@@ -2,6 +2,9 @@
 
 DevPulse is a backend REST API for managing software issues and feature requests. It supports authentication, role-based access control, and full CRUD operations using Node.js, TypeScript, Express, and PostgreSQL with raw SQL queries.
 
+## Live link:  
+- https://dev-pulse-inky-nine.vercel.app/
+
 ##  Tech Stack
 
 - Node.js (LTS 24+)
@@ -23,5 +26,5 @@ DevPulse is a backend REST API for managing software issues and feature requests
 - Modular and scalable architecture
 
 
-Live link:  https://dev-pulse-inky-nine.vercel.app/
+
 

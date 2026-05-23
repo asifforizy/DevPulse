@@ -14,13 +14,13 @@ const registerUser = async (req: Request, res: Response) => {
             data: result,
         });
 
-    } catch (error: any) {
+    } catch (error: unknown) {
 
         sendResponse(res, {
             statusCode: 500,
             success: false,
-            message: error.message,
-            error: error.message,
+            message: (error as Error).message,
+            error: (error as Error).message,
         });
     }
 }
@@ -37,13 +37,13 @@ const loginUser = async (req: Request, res: Response) => {
             data: result,
         });
 
-    } catch (error: any) {
+    } catch (error: unknown) {
 
         sendResponse(res, {
             statusCode: 500,
             success: false,
-            message: error.message,
-            error: error.message,
+            message: (error as Error).message,
+            error: (error as Error).message,
         });
     }
 }
