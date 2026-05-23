@@ -1,6 +1,6 @@
 import type { JwtPayload } from "jsonwebtoken";
 import { pool } from "../../db";
-import type { IIssue, IIssue } from "./issue.interface";
+import type { IIssue } from "./issue.interface";
 
 const createIssue = async (payload: IIssue) => {
     const { title, description, type, reporter_id } = payload;
@@ -192,7 +192,6 @@ const deleteIssue = async (id: string) => {
         `
         DELETE FROM issues
         WHERE id = $1
-        RETURNING *
         `,
         [id]
     );

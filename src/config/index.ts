@@ -7,5 +7,6 @@ export const config = {
     port: process.env.PORT,
     databaseUrl: process.env.DATABASE_URL,
     node_env : process.env.NODE_ENV,
-    secret : process.env.SECRET_KEY
+    secret : process.env.SECRET_KEY,
+    refresh_secret: process.env.REFRESH_SECRET_KEY
 };
