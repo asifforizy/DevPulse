@@ -23,5 +23,5 @@ DevPulse is a backend REST API for managing software issues and feature requests
 - Modular and scalable architecture
 
 
-Live link: 
+Live link:  https://dev-pulse-inky-nine.vercel.app/
 

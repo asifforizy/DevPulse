@@ -11,6 +11,10 @@ app.use(express.json());
 app.use(express.text());
 app.use(express.urlencoded({ extended: true }));
 
+app.get("/", (req: Request, res: Response) => {
+    res.send("wellcome to devpulse API");
+});
+
 
 app.use("/api/auth", authRoute);
 app.use("/api/issues", issueRoute);
